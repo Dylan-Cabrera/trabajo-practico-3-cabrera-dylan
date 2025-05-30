@@ -1,6 +1,6 @@
 
 //boton para mostrar el contenido
-const traerDatos = document.querySelector('#traerDatosBtn');
+const traerDatosBtn = document.querySelector('#traerDatosBtn');
 
 //contenedor a actualizar
 const contenedorPadre = document.querySelector('#contenedorPadre');
@@ -29,11 +29,9 @@ const cargarDatos = async (url) => {
 
 
 
-//inicia el evento cuando se hace click en ese boton
-traerDatos.addEventListener( 'click', async () => {
-
-    //invoca a la funcion y guarda lo que retorna
-    const data = await cargarDatos(dragonBallAPI);
+//guarda los todos los personajes
+const totalPersonajes = async() => {
+     const data = await cargarDatos(dragonBallAPI);
 
     //para verificar que lleguen los datos correctamente
     if (!data) {
@@ -42,10 +40,13 @@ traerDatos.addEventListener( 'click', async () => {
     }
     //accede a los items 
     const dataPersonajes = data.items;
+    return dataPersonajes;
+};
 
-    console.log(dataPersonajes)
+//funcion para mostrar los personajes aparte para poder reutilizarla
+const mostrarPersonajes = async (personajes) => {
 
-    dataPersonajes.forEach((personaje) => {
+    personajes.forEach((personaje) => {
         contenedorPadre.innerHTML += `
          <div class="col-6 pb-2 d-flex justify-content-center" data-id=${personaje.id} style="width: 18rem;">
             <div>
@@ -65,12 +66,63 @@ traerDatos.addEventListener( 'click', async () => {
         `
         
     });
+};
+
+//muestra todos los personajes 
+traerDatosBtn.addEventListener( 'click', async () => {
+    const personajes = await totalPersonajes();
+     mostrarPersonajes(personajes);
+});
 
 
+   
+   
+
+    
+
+//retorna los escrito en el buscador
+const buscador = async () => {
+
+     const busqueda = await document.querySelector('#buscador').value;
+    
+     return busqueda;
+};
+
+const buscarBtn = document.querySelector('#buscarBoton');
+const limpiarBtn = document.querySelector('#limpiarBoton');
 
 
+//crea un array, recorre todos los nombres buncando coincidencias y las pushea al array
+//invoca la funcion para mostrar y le pasa de argumento el array asi solo mustra las coincidencias
+buscarBtn.addEventListener('click', async (e) => {
+    e.defaultPrevented(true);
+
+    const personajes = await totalPersonajes();
+    const cantidadPersonajes =  await personajes.length;
+    const busqueda = await buscador();
+    const nombre = '';
+    const  personajesBuscados = [];
+
+     for (let i = 0; i< cantidadPersonajes ; i++) 
+        nombre = await personajes[i].name.toLowerCase()
+    ;
+        if (nombre.includes(busqueda.toLowerCase())){
+            personajesBuscados.push(personajes[i]);
+
+        };
+        console.log(personajesBuscados)
+
+    mostrarPersonajes(personajesBuscados);
 
 
+     });
 
 
-} )
+//evento para limpiar busqueda
+limpiarBtn.addEventListener('click', async() => {
+    //cambia el valor de el imput y lo deja vacio
+    document.querySelector('#buscador').value = '';
+    const personajes = await totalPersonajes();
+     mostrarPersonajes(personajes);
+
+    });
