@@ -48,7 +48,7 @@ const mostrarPersonajes = async (personajes) => {
 
     personajes.forEach((personaje) => {
         contenedorPadre.innerHTML += `
-         <div class="col-6 pb-2 d-flex justify-content-center" data-id=${personaje.id} style="width: 18rem;">
+        <div class="col-6 pb-2 d-flex justify-content-center" data-id=${personaje.id} style="width: 18rem;">
             <div>
                     <div class=" pb-2 d-flex justify-content-center">
                         <img  height="300px" class= 'card-img-top' src="${personaje.image}" >
@@ -69,13 +69,13 @@ const mostrarPersonajes = async (personajes) => {
 };
 
 //muestra todos los personajes 
-traerDatosBtn.addEventListener( 'click', async () => {
+const mostrar = async () => {
     const personajes = await totalPersonajes();
-     mostrarPersonajes(personajes);
-});
+    mostrarPersonajes(personajes);
+};
+mostrar()
 
 
-   
 
 
 const buscarBtn = document.querySelector('#buscarBoton');
