@@ -48,15 +48,15 @@ const mostrarPersonajes = async (personajes) => {
 
     personajes.forEach((personaje) => {
         contenedorPadre.innerHTML += `
-        <div class="col-6 pb-2 d-flex justify-content-center" data-id=${personaje.id} style="width: 18rem;">
+        <div class="col-6 pb-2 m-2 d-flex justify-content-center .bg-light.bg-gradient rounded " data-id=${personaje.id} style="width: 18rem;">
             <div>
                     <div class=" pb-2 d-flex justify-content-center">
                         <img  height="300px" class= 'card-img-top' src="${personaje.image}" >
                     </div>
-                    <div class="card-body">
-                        <p id="nombre" class="card-text"> ${personaje.name}  </p>
-                        <p id="raza" class="card-text"> ${personaje.race} </p>
-                        <p id="genero" class="card-text"> ${personaje.gender} </p>
+                    <div class="card-body ">
+                        <p id="nombre" class="card-text  border-bottom  border-success "> ${personaje.name}  </p>
+                        <p id="raza" class="card-text  border-bottom border-success "> ${personaje.race} </p>
+                        <p id="genero" class="card-text border-bottom  border-success "> ${personaje.gender} </p>
                         <button  id="botonVerMas" class="btn btn-outline-dark"> Ver Más </button>
                     </div>
                 </div>
@@ -74,8 +74,6 @@ const mostrar = async () => {
     mostrarPersonajes(personajes);
 };
 mostrar()
-
-
 
 
 const buscarBtn = document.querySelector('#buscarBoton');
@@ -96,23 +94,27 @@ buscarBtn.addEventListener('click', async (e) => {
     for ( let i=0; i< personajes.length; i++ )  {
         let nombre = personajes[i].name.toLowerCase();
 
-        if (valorBusqueda === ''){
-        alert('ingrese el nombre para buscar');
-        break
-       }
-
+    
         if ( nombre.includes(valorBusqueda)){
 
             console.log('se encontro concordancia')
             personajesBuscados.push(personajes[i])
-            continue
+            
 
         }else {
             console.log('terminando la busqueda')
-        }
-       
+        };
 
-    } 
+
+    };
+    if (personajesBuscados.length> 0){
+            contenedorPadre.innerHTML = `<div></div>`
+
+            mostrarPersonajes(personajesBuscados)
+        } else{
+            contenedorPadre.innerHTML = `<div> 
+            <p> No se encontraron resultados </p></div>`
+        };
 
 
 
@@ -129,18 +131,16 @@ buscarBtn.addEventListener('click', async (e) => {
     //         console.log('busqueda fallida')
     //     };
 
-       
-        console.log(personajesBuscados, 'personajes buscados')
-
-    mostrarPersonajes(personajesBuscados);
+        
 
 
-     });
+    });
 
 
 //evento para limpiar busqueda
 limpiarBtn.addEventListener( 'click', async () => {
+    busqueda.value = '';
 
     const personajes = await totalPersonajes();
-     mostrarPersonajes(personajes);
+    mostrar();
 });
