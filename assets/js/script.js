@@ -53,10 +53,10 @@ const mostrarPersonajes = async (personajes) => {
                     <div class=" pb-2 d-flex justify-content-center">
                         <img  height="300px" class= 'card-img-top' src="${personaje.image}" >
                     </div>
-                    <div class="card-body ">
-                        <p id="nombre" class="card-text  border-bottom  border-success "> ${personaje.name}  </p>
-                        <p id="raza" class="card-text  border-bottom border-success "> ${personaje.race} </p>
-                        <p id="genero" class="card-text border-bottom  border-success "> ${personaje.gender} </p>
+                    <div id="info" class="card-body ">
+                        <p id="nombre" class="card-text  border-bottom  border-success "> Nombre: ${personaje.name}  </p>
+                        <p id="raza" class="card-text  border-bottom border-success "> Raza: ${personaje.race} </p>
+                        <p id="genero" class="card-text border-bottom  border-success "> Género ${personaje.gender} </p>
                         <button  id="botonVerMas" class="btn btn-outline-dark"> Ver Más </button>
                     </div>
                 </div>
@@ -74,6 +74,25 @@ const mostrar = async () => {
     mostrarPersonajes(personajes);
 };
 mostrar()
+
+// const detalles = async (id)=>{
+//     const response = await fetch(`${dragonBallAPI}/${id}`)
+//     const data = await response.json();
+    
+    
+//     alert(data.description)
+    
+
+// };
+
+// contenedorPadre.addEventListener("click", (e) => {
+//     if (e.target.classList.contains("botonVerMas")) {
+//     const cardPadre = e.target.closest("row");
+//     const id = cardPadre.dataset.id;
+
+//     detalles(id);
+//     }})
+
 
 
 const buscarBtn = document.querySelector('#buscarBoton');

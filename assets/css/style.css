@@ -8,6 +8,7 @@
 }
 
 body{
-background-image: url('assets/images/shenron-dragon-ball.jpg');
+background-image: url(../images/shenron-dragon-ball.jpg);
+background-attachment: fixed;
 }
 
