@@ -76,41 +76,61 @@ traerDatosBtn.addEventListener( 'click', async () => {
 
 
    
-   
 
-    
-
-//retorna los escrito en el buscador
-const buscador = async () => {
-
-     const busqueda = await document.querySelector('#buscador').value;
-    
-     return busqueda;
-};
 
 const buscarBtn = document.querySelector('#buscarBoton');
 const limpiarBtn = document.querySelector('#limpiarBoton');
-
+const busqueda = document.querySelector('#buscador');
 
 //crea un array, recorre todos los nombres buncando coincidencias y las pushea al array
 //invoca la funcion para mostrar y le pasa de argumento el array asi solo mustra las coincidencias
 buscarBtn.addEventListener('click', async (e) => {
-    e.defaultPrevented(true);
+    e.preventDefault();
 
     const personajes = await totalPersonajes();
-    const cantidadPersonajes =  await personajes.length;
-    const busqueda = await buscador();
-    const nombre = '';
-    const  personajesBuscados = [];
+    const valorBusqueda = busqueda.value.toLowerCase();
+    
 
-     for (let i = 0; i< cantidadPersonajes ; i++) 
-        nombre = await personajes[i].name.toLowerCase()
-    ;
-        if (nombre.includes(busqueda.toLowerCase())){
-            personajesBuscados.push(personajes[i]);
+    const  personajesBuscados = [] 
 
-        };
-        console.log(personajesBuscados)
+    for ( let i=0; i< personajes.length; i++ )  {
+        let nombre = personajes[i].name.toLowerCase();
+
+        if (valorBusqueda === ''){
+        alert('ingrese el nombre para buscar');
+        break
+       }
+
+        if ( nombre.includes(valorBusqueda)){
+
+            console.log('se encontro concordancia')
+            personajesBuscados.push(personajes[i])
+            continue
+
+        }else {
+            console.log('terminando la busqueda')
+        }
+       
+
+    } 
+
+
+
+        
+    //  for (let i = 0; i< cantidadPersonajes ; i++) 
+
+    //     nombre = await personajes.name;
+
+    // ;   console.log(nombre, 'nombre')
+
+    //     if (nombre.toLowerCase.includes(busqueda.toLowerCase())){
+    //         personajesBuscados.push(personajes[i]);}
+    //     else {
+    //         console.log('busqueda fallida')
+    //     };
+
+       
+        console.log(personajesBuscados, 'personajes buscados')
 
     mostrarPersonajes(personajesBuscados);
 
@@ -119,10 +139,8 @@ buscarBtn.addEventListener('click', async (e) => {
 
 
 //evento para limpiar busqueda
-limpiarBtn.addEventListener('click', async() => {
-    //cambia el valor de el imput y lo deja vacio
-    document.querySelector('#buscador').value = '';
+limpiarBtn.addEventListener( 'click', async () => {
+
     const personajes = await totalPersonajes();
      mostrarPersonajes(personajes);
-
-    });
+});
